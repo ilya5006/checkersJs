@@ -1,8 +1,28 @@
-let setChecker = (oneCell, checker) =>
+class Checker
 {
-    oneCell.style.backgroundImage = `url("./img/${checker}.png")`;
-    oneCell.style.backgroundSize = 'cover';
-    oneCell.style.backgroundRepeat = 'no-repeat';
+    constructor(type, oneCell)
+    {
+        this.type = type;
+        this.cell = oneCell;
+        this._setCheckerInCell();
+    }
+
+    makeMove()
+    {
+
+    }
+
+    _isMovePossible(x, y)
+    {
+
+    }
+
+    _setCheckerInCell()
+    {
+        this.cell.style.backgroundImage = `url("./img/${this.type}.png")`;
+        this.cell.style.backgroundSize = 'cover';
+        this.cell.style.backgroundRepeat = 'no-repeat';
+    }
 }
 
 let initAndFillColorsCells = (field) =>
@@ -13,23 +33,32 @@ let initAndFillColorsCells = (field) =>
     let evenColor = brown; // Чётное
     let oddColor = white; // Нечётное
     
-    for (let i = 1; i <= 64; i++)
+    for (let i = 0; i < 8; i++)
     {
-        let oneCell = document.createElement('div');
-    
-        if (i % 2 == 1)
-            oneCell.style.backgroundColor = oddColor;
-        else
-            oneCell.style.backgroundColor = evenColor;
+        for (let j = 0; j < 8; j++)
+        {
+            let oneCell = document.createElement('div');
+            oneCell.dataset.position = `${j} ${i}`;
 
-        if (oneCell.style.backgroundColor == brown && i <= 24)
-            setChecker(oneCell, 'white');
-        if (oneCell.style.backgroundColor == brown && i >= 41)
-            setChecker(oneCell, 'black');
+            if ((j + 1) % 2 == 1)
+                oneCell.style.backgroundColor = oddColor;
+            else
+                oneCell.style.backgroundColor = evenColor;
 
-        if (i % 8 == 0) [evenColor, oddColor] = [oddColor, evenColor];
-        
-        field.insertAdjacentElement('beforeEnd', oneCell);
+            if (oneCell.style.backgroundColor == brown && i < 3)
+                new Checker('white', oneCell);
+            if (oneCell.style.backgroundColor == brown && i > 4)
+                new Checker('black', oneCell);
+
+            // oneCell.addEventListener('click', (event) =>
+            // {
+
+            // });
+
+            field.insertAdjacentElement('beforeEnd', oneCell);
+        }
+
+        [evenColor, oddColor] = [oddColor, evenColor];
     }
 }
 
