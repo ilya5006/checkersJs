@@ -1,10 +1,23 @@
 class Checker
 {
-    constructor(type, oneCell)
+    constructor(type, cell)
     {
-        this.type = type;
-        this.cell = oneCell;
-        this._setCheckerInCell();
+        this.cell = cell;
+        this.checker = type;
+    }
+
+    set checker(value)
+    {
+        this.checkerType = value;
+
+        this.cell.style.backgroundImage = `url("./img/${this.checkerType}.png")`;
+        this.cell.style.backgroundSize = 'cover';
+        this.cell.style.backgroundRepeat = 'no-repeat';
+    }
+
+    get checker()
+    {
+        return this.checkerType;
     }
 
     makeMove()
@@ -15,13 +28,6 @@ class Checker
     _isMovePossible(x, y)
     {
 
-    }
-
-    _setCheckerInCell()
-    {
-        this.cell.style.backgroundImage = `url("./img/${this.type}.png")`;
-        this.cell.style.backgroundSize = 'cover';
-        this.cell.style.backgroundRepeat = 'no-repeat';
     }
 }
 
@@ -50,11 +56,6 @@ let initAndFillColorsCells = (field) =>
             if (oneCell.style.backgroundColor == brown && i > 4)
                 new Checker('black', oneCell);
 
-            // oneCell.addEventListener('click', (event) =>
-            // {
-
-            // });
-
             field.insertAdjacentElement('beforeEnd', oneCell);
         }
 
@@ -65,3 +66,19 @@ let initAndFillColorsCells = (field) =>
 let field = document.querySelector('#field');
 
 initAndFillColorsCells(field);
+
+let cells = document.querySelectorAll('#field div');
+
+cells.forEach((cell) =>
+{
+    // cell.addEventListener('mouseover', (event) =>
+    // {
+    //     event.target.style.backgroundColor = 'grey';
+    // });
+
+    // cell.addEventListener('mouseout', (event) =>
+    // {
+    //     event.target.style.backgroundColor = 'grey';
+    // });
+
+});
