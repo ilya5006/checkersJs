@@ -12,12 +12,37 @@
             box-sizing: border-box;
         }
 
-        #chose
+        .brown
         {
-            cursor: default;
+            background-color: rgb(102, 44, 23);
         }
 
-        #objects div, #field div, #chose
+        .whiteBG
+        {
+            background-color: rgb(250, 248, 221);
+        }
+
+        .whiteChecker
+        {
+            background-image: url("./img/white.png");
+        }
+
+        .whiteQueen
+        {
+            background-image: url("./img/whiteQueen.png");
+        }
+
+        .black
+        {
+            background-image: url("./img/black.png");
+        }
+
+        .blackQueen
+        {
+            background-image: url("./img/blackQueen.png");
+        }
+
+        #field div
         {
             width: 50px;
             height: 50px;
@@ -29,17 +54,9 @@
             background-repeat: no-repeat;
         }
 
-        #objects div:hover, #field div:hover
+        #field div:hover
         {
-            background-color: hsl(318, 0%, 81%);
-        }
-
-        #objects
-        {
-            display: flex;
-            flex-direction: row;
-
-            margin-top: 30px;
+            background-color: grey;
         }
 
         html, body
@@ -68,9 +85,7 @@
     <title>Checkers</title>
 </head>
 <body>
-    <div id="field">
-
-    </div>
+    <div id="field"></div>
     <script src="./script.js"></script> 
 </body>
 </html>

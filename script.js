@@ -4,15 +4,27 @@ class Checker
     {
         this.cell = cell;
         this.checker = type;
+        
     }
 
     set checker(value)
     {
         this.checkerType = value;
-
-        this.cell.style.backgroundImage = `url("./img/${this.checkerType}.png")`;
-        this.cell.style.backgroundSize = 'cover';
-        this.cell.style.backgroundRepeat = 'no-repeat';
+        switch (this.checkerType)
+        {
+            case 'black':
+                this.cell.classList.add('black');
+                break;
+            case 'white':
+                this.cell.classList.add('whiteChecker');
+                break;
+            case 'whiteQueen':
+                this.cell.classList.add('whiteQueen');
+                break;
+            case 'blackQueen':
+                this.cell.classList.add('blackQueen');
+                break;
+        }
     }
 
     get checker()
@@ -33,11 +45,10 @@ class Checker
 
 let initAndFillColorsCells = (field) =>
 {
-    let white = 'rgb(250, 248, 221)';
     let brown = 'rgb(102, 44, 23)';
 
-    let evenColor = brown; // Чётное
-    let oddColor = white; // Нечётное
+    let evenColor = 'brown'; // Чётное
+    let oddColor = 'whiteBG'; // Нечётное
     
     for (let i = 0; i < 8; i++)
     {
@@ -47,9 +58,9 @@ let initAndFillColorsCells = (field) =>
             oneCell.dataset.position = `${j} ${i}`;
 
             if ((j + 1) % 2 == 1)
-                oneCell.style.backgroundColor = oddColor;
+                oneCell.classList.add(oddColor);
             else
-                oneCell.style.backgroundColor = evenColor;
+                oneCell.classList.add(evenColor);
 
             if (oneCell.style.backgroundColor == brown && i < 3)
                 new Checker('white', oneCell);
