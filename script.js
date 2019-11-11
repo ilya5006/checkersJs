@@ -65,14 +65,12 @@ let initCellsAndCheckers = (field) =>
             let isCellEven = (j + 1) % 2 == 0;
             let isCellOdd = (j + 1) % 2 == 1;
 
-            if ( ( (isLineOdd && isCellEven) || (isLineEven && isCellOdd) ) && i < 3 )
-            {
+            let isCellBrown = ( (isLineOdd && isCellEven) || (isLineEven && isCellOdd) );
+
+            if (isCellBrown && i < 3)
                 new Checker('white', oneCell);
-            }
-            if ( ( (isLineOdd && isCellEven) || (isLineEven && isCellOdd) ) && i > 4)
-            {
+            if (isCellBrown && i > 4)
                 new Checker('black', oneCell);
-            }
 
             field.insertAdjacentElement('beforeEnd', oneCell);
         }
