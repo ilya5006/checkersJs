@@ -4,7 +4,6 @@ class Checker
     {
         this.cell = cell;
         this.checker = type;
-        
     }
 
     set checker(value)
@@ -43,10 +42,8 @@ class Checker
     }
 }
 
-let initAndFillColorsCells = (field) =>
+let initCellsAndCheckers = (field) =>
 {
-    let brown = 'rgb(102, 44, 23)';
-
     let evenColor = 'brown'; // Чётное
     let oddColor = 'whiteBG'; // Нечётное
     
@@ -62,10 +59,20 @@ let initAndFillColorsCells = (field) =>
             else
                 oneCell.classList.add(evenColor);
 
-            if (oneCell.style.backgroundColor == brown && i < 3)
+            let isLineEven = (i + 1) % 2 == 0;
+            let isLineOdd = (i + 1) % 2 == 1;
+
+            let isCellEven = (j + 1) % 2 == 0;
+            let isCellOdd = (j + 1) % 2 == 1;
+
+            if ( ( (isLineOdd && isCellEven) || (isLineEven && isCellOdd) ) && i < 3 )
+            {
                 new Checker('white', oneCell);
-            if (oneCell.style.backgroundColor == brown && i > 4)
+            }
+            if ( ( (isLineOdd && isCellEven) || (isLineEven && isCellOdd) ) && i > 4)
+            {
                 new Checker('black', oneCell);
+            }
 
             field.insertAdjacentElement('beforeEnd', oneCell);
         }
@@ -76,7 +83,7 @@ let initAndFillColorsCells = (field) =>
 
 let field = document.querySelector('#field');
 
-initAndFillColorsCells(field);
+initCellsAndCheckers(field);
 
 let cells = document.querySelectorAll('#field div');
 
