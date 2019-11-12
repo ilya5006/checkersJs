@@ -42,10 +42,16 @@ class Checker
     }
 }
 
+/**
+ * Creating cells(divs) white and brown colors
+ * @param {DOMElement} field - DIV where will creating cells
+ * @returns {array} - Array which contains cells with checkers
+ */
 let initCellsAndCheckers = (field) =>
 {
     let evenColor = 'brown'; // Чётное
     let oddColor = 'whiteBG'; // Нечётное
+    let checkers = [];
     
     for (let i = 0; i < 8; i++)
     {
@@ -68,15 +74,18 @@ let initCellsAndCheckers = (field) =>
             let isCellBrown = ( (isLineOdd && isCellEven) || (isLineEven && isCellOdd) );
 
             if (isCellBrown && i < 3)
-                new Checker('white', oneCell);
+                checkers.push(new Checker('white', oneCell));
+                
             if (isCellBrown && i > 4)
-                new Checker('black', oneCell);
+                checkers.push(new Checker('black', oneCell));
 
             field.insertAdjacentElement('beforeEnd', oneCell);
         }
 
         [evenColor, oddColor] = [oddColor, evenColor];
     }
+
+    return checkers;
 }
 
 let field = document.querySelector('#field');
