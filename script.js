@@ -90,20 +90,14 @@ let initCellsAndCheckers = (field) =>
 
 let field = document.querySelector('#field');
 
-initCellsAndCheckers(field);
+let choseChecker = null;
 
-let cells = document.querySelectorAll('#field div');
+let checkers = initCellsAndCheckers(field);
 
-cells.forEach((cell) =>
+checkers.forEach((checker) =>
 {
-    // cell.addEventListener('mouseover', (event) =>
-    // {
-    //     event.target.style.backgroundColor = 'grey';
-    // });
-
-    // cell.addEventListener('mouseout', (event) =>
-    // {
-    //     event.target.style.backgroundColor = 'grey';
-    // });
-
+    checker.cell.addEventListener('click', (event) =>
+    {
+        choseChecker = checker;
+    })
 });
