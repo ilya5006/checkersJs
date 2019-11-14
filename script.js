@@ -30,16 +30,22 @@ class Checker
     {
         return this.checkerType;
     }
+}
 
-    makeMove()
+let findBrownCellsWithoutChecker = (field) =>
+{
+    let brownCellsWithoutChecker = [];
+    
+    let cells = field.querySelectorAll('div');
+
+    cells.forEach((cell) =>
     {
+        let isChecker = cell.classList.contains('whiteChecker') || cell.classList.contains('black') || cell.classList.contains('whiteQueen') || cell.classList.contains('blackQueen');
+        let isBrown = cell.classList.contains('brown');
+        if (!isChecker && isBrown) brownCellsWithoutChecker.push(cell);
+    });
 
-    }
-
-    _isMovePossible(x, y)
-    {
-
-    }
+    return brownCellsWithoutChecker;
 }
 
 /**
@@ -94,10 +100,12 @@ let choseChecker = null;
 
 let checkers = initCellsAndCheckers(field);
 
+let brownCellsWithoutChecker = findBrownCellsWithoutChecker(field);
+
 checkers.forEach((checker) =>
 {
     checker.cell.addEventListener('click', (event) =>
     {
         choseChecker = checker;
-    })
+    });
 });
