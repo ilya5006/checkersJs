@@ -32,6 +32,46 @@ class Checker
     }
 }
 
+let allIsPosibleToMoveCells = (checker, field) =>
+{
+    let checkerPosition = checker.cell.dataset.position;
+    checkerPosition = checkerPosition.split(' ');
+    checkerPosition = checkerPosition.map((coordinate) => { return parseInt(coordinate); });
+    
+    let cells = [];
+    
+    for (let i = checkerPosition[1] - 1; i < checkerPosition[1] + 2; i++)
+    {
+        for (let j = checkerPosition[0] - 1; j < checkerPosition[0] + 2; j++)
+        {
+            try // Beacuse we can out of range indexes
+            {
+                let cell = field.querySelector(`div[data-position="${j} ${i}"]`);
+                let isPossibleToMove = cell.classList.contains('brown') && !cell.classList.contains('whiteChecker') && 
+                                      !cell.classList.contains('whiteQueen') && !cell.classList.contains('black') && 
+                                      !cell.classList.contains('blackQueen');
+
+                if (isPossibleToMove) cells.push(cell);
+            }
+            catch (e)
+            {
+                null;
+            }
+        }
+    }
+
+    return cells;
+}
+
+let showMovement = (cells) =>
+{
+    cells.forEach((cell) =>
+    {
+        cell.classList.add('possibleMove');
+        cell.classList.remove('brown');
+    });
+}
+
 let findBrownCellsWithoutChecker = (field) =>
 {
     let brownCellsWithoutChecker = [];
@@ -102,10 +142,22 @@ let checkers = initCellsAndCheckers(field);
 
 let brownCellsWithoutChecker = findBrownCellsWithoutChecker(field);
 
+let cellsForMovement = [];
+
 checkers.forEach((checker) =>
 {
     checker.cell.addEventListener('click', (event) =>
     {
         choseChecker = checker;
+        
+        cellsForMovement.forEach((cell) =>
+        {
+            cell.classList.remove('possibleMove');
+            cell.classList.add('brown');
+        });
+
+        cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
+
+        showMovement(cellsForMovement);
     });
 });
