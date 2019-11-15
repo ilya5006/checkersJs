@@ -14,7 +14,7 @@ class Checker
             case 'black':
                 this.cell.classList.add('black');
                 break;
-            case 'white':
+            case 'whiteChecker':
                 this.cell.classList.add('whiteChecker');
                 break;
             case 'whiteQueen':
@@ -32,19 +32,27 @@ class Checker
     }
 }
 
+let makeMove = (event) =>
+{
+    event.target.classList.remove('possibleMove');
+    event.target.classList.add('brown');
+    event.target.classList.add(choseChecker.checker);
+    event.target.removeEventListener('click', makeMove);
+}
+
 let allIsPosibleToMoveCells = (checker, field) =>
 {
     let checkerPosition = checker.cell.dataset.position;
     checkerPosition = checkerPosition.split(' ');
     checkerPosition = checkerPosition.map((coordinate) => { return parseInt(coordinate); });
-    
+
     let cells = [];
-    
+
     for (let i = checkerPosition[1] - 1; i < checkerPosition[1] + 2; i++)
     {
         for (let j = checkerPosition[0] - 1; j < checkerPosition[0] + 2; j++)
         {
-            try // Beacuse we can out of range indexes
+            try // Beacuse we can out of range
             {
                 let cell = field.querySelector(`div[data-position="${j} ${i}"]`);
                 let isPossibleToMove = cell.classList.contains('brown') && !cell.classList.contains('whiteChecker') && 
@@ -75,7 +83,7 @@ let showMovement = (cells) =>
 let findBrownCellsWithoutChecker = (field) =>
 {
     let brownCellsWithoutChecker = [];
-    
+
     let cells = field.querySelectorAll('div');
 
     cells.forEach((cell) =>
@@ -98,7 +106,7 @@ let initCellsAndCheckers = (field) =>
     let evenColor = 'brown'; // Чётное
     let oddColor = 'whiteBG'; // Нечётное
     let checkers = [];
-    
+
     for (let i = 0; i < 8; i++)
     {
         for (let j = 0; j < 8; j++)
@@ -120,7 +128,7 @@ let initCellsAndCheckers = (field) =>
             let isCellBrown = ( (isLineOdd && isCellEven) || (isLineEven && isCellOdd) );
 
             if (isCellBrown && i < 3)
-                checkers.push(new Checker('white', oneCell));
+                checkers.push(new Checker('whiteChecker', oneCell));
                 
             if (isCellBrown && i > 4)
                 checkers.push(new Checker('black', oneCell));
@@ -150,14 +158,19 @@ checkers.forEach((checker) =>
     {
         choseChecker = checker;
         
-        cellsForMovement.forEach((cell) =>
-        {
-            cell.classList.remove('possibleMove');
-            cell.classList.add('brown');
-        });
+        // cellsForMovement.forEach((cell) =>
+        // {
+        //     cell.removeEventListener('click', makeMove);
+        //     cell.classList.remove('possibleMove');
+        //     cell.classList.add('brown');
+        // });
 
         cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
-
         showMovement(cellsForMovement);
+
+        cellsForMovement.forEach((cell) =>
+        {
+            cell.addEventListener('click', makeMove);
+        });
     });
 });
