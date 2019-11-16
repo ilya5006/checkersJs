@@ -37,7 +37,15 @@ let makeMove = (event) =>
     event.target.classList.remove('possibleMove');
     event.target.classList.add('brownBG');
     event.target.classList.add(choseChecker.checker);
-    event.target.removeEventListener('click', makeMove);
+
+    cellsForMovement.forEach((cell) =>
+    {
+        cell.classList.remove('possibleMove');
+        cell.classList.add('brownBG');
+        cell.removeEventListener('click', makeMove);
+    });
+    
+    choseChecker.cell.classList.remove(choseChecker.checker);
 }
 
 let allIsPosibleToMoveCells = (checker, field) =>
@@ -61,10 +69,7 @@ let allIsPosibleToMoveCells = (checker, field) =>
 
                 if (isPossibleToMove) cells.push(cell);
             }
-            catch (e)
-            {
-                null;
-            }
+            catch (e) { null; }
         }
     }
 
@@ -157,13 +162,6 @@ checkers.forEach((checker) =>
     checker.cell.addEventListener('click', (event) =>
     {
         choseChecker = checker;
-        
-        // cellsForMovement.forEach((cell) =>
-        // {
-        //     cell.removeEventListener('click', makeMove);
-        //     cell.classList.remove('possibleMove');
-        //     cell.classList.add('brown');
-        // });
 
         cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
         showMovement(cellsForMovement);
