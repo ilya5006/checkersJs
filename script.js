@@ -11,8 +11,8 @@ class Checker
         this.checkerType = value;
         switch (this.checkerType)
         {
-            case 'black':
-                this.cell.classList.add('black');
+            case 'blackChecker':
+                this.cell.classList.add('blackChecker');
                 break;
             case 'whiteChecker':
                 this.cell.classList.add('whiteChecker');
@@ -35,7 +35,7 @@ class Checker
 let makeMove = (event) =>
 {
     event.target.classList.remove('possibleMove');
-    event.target.classList.add('brown');
+    event.target.classList.add('brownBG');
     event.target.classList.add(choseChecker.checker);
     event.target.removeEventListener('click', makeMove);
 }
@@ -55,8 +55,8 @@ let allIsPosibleToMoveCells = (checker, field) =>
             try // Beacuse we can out of range
             {
                 let cell = field.querySelector(`div[data-position="${j} ${i}"]`);
-                let isPossibleToMove = cell.classList.contains('brown') && !cell.classList.contains('whiteChecker') && 
-                                      !cell.classList.contains('whiteQueen') && !cell.classList.contains('black') && 
+                let isPossibleToMove = cell.classList.contains('brownBG') && !cell.classList.contains('whiteChecker') && 
+                                      !cell.classList.contains('whiteQueen') && !cell.classList.contains('blackChecker') && 
                                       !cell.classList.contains('blackQueen');
 
                 if (isPossibleToMove) cells.push(cell);
@@ -76,7 +76,7 @@ let showMovement = (cells) =>
     cells.forEach((cell) =>
     {
         cell.classList.add('possibleMove');
-        cell.classList.remove('brown');
+        cell.classList.remove('brownBG');
     });
 }
 
@@ -89,7 +89,7 @@ let findBrownCellsWithoutChecker = (field) =>
     cells.forEach((cell) =>
     {
         let isChecker = cell.classList.contains('whiteChecker') || cell.classList.contains('black') || cell.classList.contains('whiteQueen') || cell.classList.contains('blackQueen');
-        let isBrown = cell.classList.contains('brown');
+        let isBrown = cell.classList.contains('brownBG');
         if (!isChecker && isBrown) brownCellsWithoutChecker.push(cell);
     });
 
@@ -103,7 +103,7 @@ let findBrownCellsWithoutChecker = (field) =>
  */
 let initCellsAndCheckers = (field) =>
 {
-    let evenColor = 'brown'; // Чётное
+    let evenColor = 'brownBG'; // Чётное
     let oddColor = 'whiteBG'; // Нечётное
     let checkers = [];
 
@@ -131,7 +131,7 @@ let initCellsAndCheckers = (field) =>
                 checkers.push(new Checker('whiteChecker', oneCell));
                 
             if (isCellBrown && i > 4)
-                checkers.push(new Checker('black', oneCell));
+                checkers.push(new Checker('blackChecker', oneCell));
 
             field.insertAdjacentElement('beforeEnd', oneCell);
         }
