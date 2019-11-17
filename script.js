@@ -32,11 +32,47 @@ class Checker
     }
 }
 
+let findAndRemoveElementFromArray = (array, elementToRemove) =>
+{
+    let elementIndex = array.findIndex((element) =>
+    {
+        return (element == elementToRemove);
+    });
+
+    if (elementIndex != -1)
+    {
+        array.splice(elementIndex, 1);
+    }
+}
+
+let addEventsForCheckers = () =>
+{
+    checkers.forEach((checker) =>
+    {
+        checker.cell.addEventListener('click', () =>
+        {
+            choseChecker = checker;
+    
+            cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
+            showMovement(cellsForMovement);
+    
+            cellsForMovement.forEach((cell) =>
+            {
+                cell.addEventListener('click', makeMove);
+            });
+        });
+    });
+}
+
 let makeMove = (event) =>
 {
     event.target.classList.remove('possibleMove');
     event.target.classList.add('brownBG');
     event.target.classList.add(choseChecker.checker);
+
+    checkers.push(new Checker(choseChecker.checker, event.target));
+    findAndRemoveElementFromArray(checkers, choseChecker);
+    addEventsForCheckers();
 
     cellsForMovement.forEach((cell) =>
     {
@@ -157,18 +193,4 @@ let brownCellsWithoutChecker = findBrownCellsWithoutChecker(field);
 
 let cellsForMovement = [];
 
-checkers.forEach((checker) =>
-{
-    checker.cell.addEventListener('click', (event) =>
-    {
-        choseChecker = checker;
-
-        cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
-        showMovement(cellsForMovement);
-
-        cellsForMovement.forEach((cell) =>
-        {
-            cell.addEventListener('click', makeMove);
-        });
-    });
-});
+addEventsForCheckers();
