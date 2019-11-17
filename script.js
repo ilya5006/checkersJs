@@ -32,6 +32,19 @@ class Checker
     }
 }
 
+let checkerWaitMove = () =>
+{
+    choseChecker = checker;
+    
+    cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
+    showMovement(cellsForMovement);
+
+    cellsForMovement.forEach((cell) =>
+    {
+        cell.addEventListener('click', makeMove);
+    });
+}
+
 let findAndRemoveElementFromArray = (array, elementToRemove) =>
 {
     let elementIndex = array.findIndex((element) =>
@@ -49,18 +62,7 @@ let addEventsForCheckers = () =>
 {
     checkers.forEach((checker) =>
     {
-        checker.cell.addEventListener('click', () =>
-        {
-            choseChecker = checker;
-    
-            cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
-            showMovement(cellsForMovement);
-    
-            cellsForMovement.forEach((cell) =>
-            {
-                cell.addEventListener('click', makeMove);
-            });
-        });
+        checker.cell.addEventListener('click', checkerWaitMove);
     });
 }
 
