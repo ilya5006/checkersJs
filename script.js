@@ -195,8 +195,8 @@ let choseChecker = null;
 
 let checkers = initCellsAndCheckers(field);
 
-let brownCellsWithoutChecker = findBrownCellsWithoutChecker(field);
-
 let cellsForMovement = [];
+
+let brownCellsWithoutChecker = findBrownCellsWithoutChecker(field);
 
 addEventsForCheckers();
