@@ -88,8 +88,7 @@ let makeMove = (event) =>
 let allIsPosibleToMoveCells = (checker, field) =>
 {
     let checkerPosition = checker.cell.dataset.position;
-    checkerPosition = checkerPosition.split(' ');
-    checkerPosition = checkerPosition.map((coordinate) => { return parseInt(coordinate); });
+    checkerPosition = checkerPosition.split(' ').map((coordinate) => { return parseInt(coordinate); });
 
     let cells = [];
 
