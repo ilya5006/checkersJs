@@ -32,10 +32,9 @@ class Checker
     }
 }
 
-let checkerWaitMove = () =>
+let checkerWaitMove = (event, checker) =>
 {
     choseChecker = checker;
-    
     cellsForMovement = allIsPosibleToMoveCells(choseChecker, field);
     showMovement(cellsForMovement);
 
@@ -62,7 +61,7 @@ let addEventsForCheckers = () =>
 {
     checkers.forEach((checker) =>
     {
-        checker.cell.addEventListener('click', checkerWaitMove);
+        checker.cell.addEventListener('click', checkerWaitMove.bind(checker, event, checker));
     });
 }
 
