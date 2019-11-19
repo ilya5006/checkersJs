@@ -61,7 +61,7 @@ let addPossibilityToMove = () =>
 {
     checkers.forEach((checker) =>
     {
-        checker.cell.addEventListener('click', checkerWaitMove.bind(checker, event, checker));
+        checker.cell.addEventListener('click', checkerWaitMove.bind(this, event, checker));
     });
 }
 
