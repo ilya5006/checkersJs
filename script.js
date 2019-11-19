@@ -57,7 +57,7 @@ let findAndRemoveElementFromArray = (array, elementToRemove) =>
     }
 }
 
-let addEventsForCheckers = () =>
+let addPossibilityToMove = () =>
 {
     checkers.forEach((checker) =>
     {
@@ -73,7 +73,7 @@ let makeMove = (event) =>
 
     checkers.push(new Checker(choseChecker.checker, event.target));
     findAndRemoveElementFromArray(checkers, choseChecker);
-    addEventsForCheckers();
+    addPossibilityToMove();
 
     cellsForMovement.forEach((cell) =>
     {
@@ -198,4 +198,4 @@ let cellsForMovement = [];
 
 let brownCellsWithoutChecker = findBrownCellsWithoutChecker(field);
 
-addEventsForCheckers();
+addPossibilityToMove();
