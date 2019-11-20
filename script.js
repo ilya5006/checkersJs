@@ -130,7 +130,7 @@ let findBrownCellsWithoutChecker = (field) =>
     cells.forEach((cell) =>
     {
         let isChecker = cell.classList.contains('whiteChecker') || 
-                        cell.classList.contains('black') || 
+                        cell.classList.contains('blackChecker') || 
                         cell.classList.contains('whiteQueen') || 
                         cell.classList.contains('blackQueen');
                         
