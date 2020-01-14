@@ -6,9 +6,9 @@ class Checker
         this.checker = type;
     }
 
-    set checker(value)
+    set checker(checkerType)
     {
-        this.checkerType = value;
+        this.checkerType = checkerType;
         switch (this.checkerType)
         {
             case 'blackChecker':
@@ -40,7 +40,8 @@ let checkerWaitMove = (event, checker) =>
 
     cellsForMovement.forEach((cell) =>
     {
-        cell.addEventListener('click', makeMove);
+        
+        cell.addEventListener('click', makeMove.bind(this));
     });
 }
 
@@ -67,6 +68,8 @@ let addPossibilityToMove = () =>
 
 let makeMove = (event) =>
 {
+    console.log(choseChecker);
+    choseChecker.cell.removeEventListener('click', checkerWaitMove);
     event.target.classList.remove('possibleMove');
     event.target.classList.add('brownBG');
     event.target.classList.add(choseChecker.checker);
@@ -83,6 +86,7 @@ let makeMove = (event) =>
     });
     
     choseChecker.cell.classList.remove(choseChecker.checker);
+    brownCellsWithoutChecker = findBrownCellsWithoutChecker(field);
 }
 
 let allIsPosibleToMoveCells = (checker, field) =>
